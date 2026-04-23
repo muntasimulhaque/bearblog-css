@@ -145,7 +145,7 @@ ul.blog-posts li {
   display: flex;
   align-items: baseline;
   gap: 2rem;
-  margin: 0.25rem 0;
+  margin: 1rem 0;
   line-height: 1.4 !important;
 }
 
