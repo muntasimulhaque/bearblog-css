@@ -208,7 +208,7 @@ pre + p {
   font-size: 1.2em;
   line-height: 2;
   direction: rtl;
-  font-family: "Segoe UI", "Noto Naskh Arabic", "Arabic Typesetting", Tahoma, sans-serif;
+  font-family: "Arabic Typesetting", "Geeza Pro", "Traditional Arabic", "Noto Naskh Arabic", serif;
 }
 /* ─── Footer ─────────────────────────────────────────────── */
 footer {
