@@ -36,6 +36,8 @@ a.title:hover,
 a.title:active {
   color: var(--color-text) !important;
   text-decoration: none !important;
+  pointer-events: none;
+  cursor: default;
 }
 a.title h1 {
   font-size: 1.5rem;    
