@@ -1,3 +1,3 @@
 # Bear Blog Custom CSS
 
-Custom styles for Muntasim Ul Haque's Bear Blog.
+Custom stylesheet of Muntasim Ul Haque's Bear Blog.
