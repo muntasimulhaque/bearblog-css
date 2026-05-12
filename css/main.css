@@ -1,7 +1,6 @@
 /* ─── Variables ─────────────────────────────────────────── */
 :root {
   color-scheme: light;
-
   /* Colours */
   --color-text:               #1a1a1a;
   --color-background:         #fafafa;
@@ -9,9 +8,8 @@
   --color-link-hover:         #0d5bba;
   --color-muted:              #5f6368;
   --color-border:             #eee;
-
-  /* Blockquote / code colours — now variable-driven so dark mode just
-     overrides these, with no separate per-element dark-mode blocks needed */
+  /* Blockquote / code colours — variable-driven so dark mode overrides
+     these alone, with no separate per-element dark-mode blocks needed */
   --color-blockquote-border:  #d0d7de;
   --color-blockquote-text:    #57606a;
   --color-blockquote-bg:      #f6f8fa;
@@ -19,31 +17,32 @@
   --color-code-bg:            rgba(175, 184, 193, 0.2);
   --color-pre-bg:             #f6f8fa;
   --color-pre-border:         #e1e4e8;
-
   /* Typography scale — single source of truth for all font sizes */
   --font-size-base:           1rem;        /* 16px */
   --font-size-body:           1.0625rem;   /* 17px */
   --font-size-small:          0.875rem;    /* 14px */
   --font-size-nav:            1.1rem;
-
+  /* Layout — used by both body padding and theme-toggle positioning
+     so changing padding only requires touching one variable */
+  --body-padding-top:         4rem;
   --transition-speed:         0.2s;
 }
 
 /* ─── Reset ─────────────────────────────────────────────── */
+/* [Rec 1] Collapsed two overlapping reset blocks into one.
+   The * rule already zeros margin on everything; the second block
+   was redundant except for padding, which is now handled here. */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
-}
-
-/* Reset only elements that need explicit control; leave buttons,
-   inputs, etc. with their native padding/margins */
-ul, ol, figure, blockquote, h1, h2, h3, h4, p {
-  margin: 0;
   padding: 0;
 }
-
+/* Restore native padding only where the browser default is useful */
+ul, ol {
+  padding-left: 1.5rem;
+}
 html {
   scroll-behavior: smooth;
 }
@@ -52,7 +51,7 @@ html {
 body {
   position: relative;
   max-width: 42rem;
-  padding: 4rem 1rem;
+  padding: var(--body-padding-top) 1rem;  /* [Rec 6] uses variable */
   margin: 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     "Traditional Arabic", "Geeza Pro", "Noto Naskh Arabic", "Noto Sans Arabic", sans-serif;
@@ -64,7 +63,7 @@ body {
 }
 
 /* pointer-events: none means :hover and :active can never fire,
-   so only :link and :visited are kept; !important removed */
+   so only :link and :visited are kept */
 a.title,
 a.title:link,
 a.title:visited {
@@ -73,7 +72,6 @@ a.title:visited {
   pointer-events: none;
   cursor: default;
 }
-
 a.title h1 {
   font-size: 1.5rem;
   padding-right: 3rem; /* reserve space for absolute-positioned theme toggle */
@@ -147,8 +145,8 @@ strong, b {
 /* ─── Lists ──────────────────────────────────────────────── */
 ul {
   list-style-type: disc;
-  padding-left: 1.5rem;
   margin-bottom: 1.5rem;
+  /* padding-left comes from the * reset restore above */
 }
 ul ul {
   margin-top: 0.25rem;
@@ -171,28 +169,25 @@ ul.blog-posts li {
   margin: 1rem 0;
   line-height: 1.4;
 }
-
 /* Direct children reset */
 ul.blog-posts li > * {
   margin: 0;
   padding: 0;
   line-height: 1.4;
 }
-
 /* Date column: fixed width, non-italic, left-aligned */
+/* [Rec 3] min-width and max-width removed — flex: 0 0 7.5rem already
+   locks the size exactly when flex-grow and flex-shrink are both 0 */
 ul.blog-posts li > *:first-child {
   flex: 0 0 7.5rem;
-  min-width: 7.5rem;
-  max-width: 7.5rem;
   color: var(--color-muted);
   font-size: var(--font-size-base);
   white-space: nowrap;
   font-style: normal;
   text-align: left;
 }
-
-/* CRITICAL: Kill global time/.post-date block margins even when nested
-   inside the date wrapper. Also force non-italic. */
+/* [Rec 7] Override global time/.post-date margins inside the list —
+   prevents the 2.5rem margin-bottom from bleeding into list items */
 ul.blog-posts time,
 ul.blog-posts .post-date,
 ul.blog-posts li > *:first-child i,
@@ -202,8 +197,7 @@ ul.blog-posts li > *:first-child .post-date {
   margin: 0;
   font-style: normal;
 }
-
-/* Visited state scoped ONLY to blog-post list titles */
+/* Visited state scoped only to blog-post list titles */
 ul.blog-posts li a:visited {
   color: #6f42c1;
 }
@@ -232,6 +226,7 @@ img {
 }
 
 /* ─── Inline Code ────────────────────────────────────────── */
+/* [Rec 2] word-wrap: break-word removed — deprecated alias for overflow-wrap */
 code:not(pre code) {
   background-color: var(--color-code-bg);
   border-radius: 6px;
@@ -239,7 +234,6 @@ code:not(pre code) {
   color: var(--color-code-text);
   font-family: monospace;
   overflow-wrap: break-word;
-  word-wrap: break-word;
 }
 
 /* ─── Code Blocks ────────────────────────────────────────── */
@@ -274,7 +268,6 @@ time {
   display: block;
   margin-bottom: 2.5rem;
 }
-
 /* Bear Blog often wraps the date text in <i>; neutralise it */
 .post-date i,
 .post-date em,
@@ -292,9 +285,10 @@ footer {
 }
 
 /* ─── Theme Toggle Button ───────────────────────────────── */
+/* [Rec 6] top uses --body-padding-top so it tracks body padding automatically */
 #theme-toggle {
   position: absolute;
-  top: calc(4rem + 0.15rem);
+  top: calc(var(--body-padding-top) + 0.15rem);
   right: 1rem;
   font-size: var(--font-size-nav);
   text-decoration: none;
@@ -308,8 +302,12 @@ footer {
 
 /* ─── Mobile ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
+  :root {
+    --body-padding-top: 2rem; /* [Rec 6] one change updates both body and toggle */
+  }
   body {
-    padding: 2rem 0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
   a.title h1 {
     font-size: 1.3rem;
@@ -328,9 +326,7 @@ footer {
   h3 {
     font-size: 1.1rem;
   }
-  nav a {
-    font-size: var(--font-size-nav);
-  }
+  /* [Rec 8] nav a font-size removed — identical to base rule, does nothing */
   pre {
     padding: 0.75rem;
   }
@@ -345,22 +341,22 @@ footer {
     font-size: var(--font-size-small);
   }
   #theme-toggle {
-    top: calc(2rem + 0.05rem);
     right: 0.75rem;
+    /* top is now automatic via --body-padding-top: 2rem above */
   }
 }
 
 /* ─── Dark Theme ─────────────────────────────────────────── */
+/* Only variables are overridden here. Every element that references
+   them updates automatically — no per-element dark overrides needed. */
 html[data-theme="dark"] {
   color-scheme: dark;
-
   --color-text:               #c9d1d9;
   --color-background:         #0d1117;
   --color-link:               #58a6ff;
   --color-link-hover:         #79b8ff;
   --color-muted:              #8b949e;
   --color-border:             #30363d;
-
   --color-blockquote-border:  #30363d;
   --color-blockquote-text:    #8b949e;
   --color-blockquote-bg:      #161b22;
@@ -372,6 +368,7 @@ html[data-theme="dark"] {
 html[data-theme="dark"] ul.blog-posts li a:visited {
   color: #a371f7;
 }
+/* The only dark-mode rule that cannot be expressed as a variable */
 html[data-theme="dark"] img {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
