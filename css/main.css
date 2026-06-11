@@ -53,10 +53,9 @@ body {
   max-width: 42rem;
   padding: var(--body-padding-top) 1rem;  /* [Rec 6] uses variable */
   margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    "Traditional Arabic", "Geeza Pro", "Noto Naskh Arabic", "Noto Sans Arabic", sans-serif;
+  font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
   font-size: var(--font-size-base);
-  font-size-adjust: 0.5; /* intentional: normalises x-height across Arabic/Latin font mix */
+  font-size-adjust: 0.5; /* intentional: normalises x-height across Humanist fallback chain */
   line-height: 1.65;
   color: var(--color-text);
   background-color: var(--color-background);
