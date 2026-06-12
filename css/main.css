@@ -18,10 +18,10 @@
   --color-pre-bg:             #f6f8fa;
   --color-pre-border:         #e1e4e8;
   /* Typography scale — single source of truth for all font sizes */
-  --font-size-base:           1rem;        /* 16px */
-  --font-size-body:           1.0625rem;   /* 17px */
-  --font-size-small:          0.875rem;    /* 14px */
-  --font-size-nav:            1.1rem;
+  --font-size-base:           1.0625rem;   /* 17px */
+  --font-size-body:           1.125rem;    /* 18px */
+  --font-size-small:          0.9375rem;   /* 15px */
+  --font-size-nav:            1.1875rem;
   /* Layout — used by both body padding and theme-toggle positioning
      so changing padding only requires touching one variable */
   --body-padding-top:         4rem;
@@ -53,7 +53,7 @@ body {
   max-width: 42rem;
   padding: var(--body-padding-top) 1rem;  /* [Rec 6] uses variable */
   margin: 0 auto;
-  font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+  font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   font-size: var(--font-size-base);
   font-size-adjust: 0.5; /* intentional: normalises x-height across Humanist fallback chain */
   line-height: 1.65;
@@ -72,7 +72,7 @@ a.title:visited {
   cursor: default;
 }
 a.title h1 {
-  font-size: 1.5rem;
+  font-size: 1.625rem;
   padding-right: 3rem; /* reserve space for absolute-positioned theme toggle */
 }
 
@@ -105,26 +105,26 @@ a:hover {
 
 /* ─── Headings ───────────────────────────────────────────── */
 h1 {
-  font-size: 2rem;
+  font-size: 2.125rem;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
 }
 h2 {
-  font-size: 1.75rem;
+  font-size: 1.875rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.625rem;
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
 h4 {
-  font-size: 1.25rem;
+  font-size: 1.3125rem;
   font-weight: 600;
   line-height: 1.3;
   margin-top: 1.5rem;
@@ -309,21 +309,21 @@ footer {
     padding-right: 0.75rem;
   }
   a.title h1 {
-    font-size: 1.3rem;
+    font-size: 1.375rem;
     padding-right: 2.5rem;
   }
   p {
     font-size: var(--font-size-base);
   }
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     line-height: 1.25;
   }
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   h3 {
-    font-size: 1.1rem;
+    font-size: 1.1875rem;
   }
   /* [Rec 8] nav a font-size removed — identical to base rule, does nothing */
   pre {
