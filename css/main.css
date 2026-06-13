@@ -4,10 +4,9 @@
   /* Colours */
   --color-text:               #1a1a1a;
   --color-background:         #fafafa;
-  --color-link:               #1a73e8;
+  --color-link:               #1366d6;
   --color-link-hover:         #0d5bba;
   --color-muted:              #5f6368;
-  --color-border:             #eee;
   /* Blockquote / code colours — variable-driven so dark mode overrides
      these alone, with no separate per-element dark-mode blocks needed */
   --color-blockquote-border:  #d0d7de;
@@ -55,7 +54,7 @@ body {
   margin: 0 auto;
   font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   font-size: var(--font-size-base);
-  font-size-adjust: 0.5; /* intentional: normalises x-height across Humanist fallback chain */
+  font-size-adjust: 0.5; /* intentional: keeps x-height consistent across the fallback chain; also helps Arabic render at a comfortable size */
   line-height: 1.65;
   color: var(--color-text);
   background-color: var(--color-background);
@@ -113,6 +112,7 @@ h1 {
 h2 {
   font-size: 1.875rem;
   font-weight: 600;
+  margin-top: 2.5rem;   /* section heading gets more space above than h3 (2rem) */
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
@@ -133,7 +133,7 @@ h4 {
 
 /* ─── Body Copy ──────────────────────────────────────────── */
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   font-size: var(--font-size-body);
   line-height: 1.7;
 }
@@ -231,7 +231,7 @@ code:not(pre code) {
   border-radius: 6px;
   padding: 0.2em 0.4em;
   color: var(--color-code-text);
-  font-family: monospace;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   overflow-wrap: break-word;
 }
 
@@ -245,7 +245,7 @@ pre {
   margin: 1.5rem 0;
   line-height: 1.45;
   color: var(--color-code-text);
-  font-family: monospace;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
 }
 pre code {
   background: none;
@@ -253,7 +253,7 @@ pre code {
   border-radius: 0;
   color: inherit;
   white-space: pre;
-  font-family: monospace;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
 }
 
 /* ─── Post Date / Meta ───────────────────────────────────── */
@@ -289,10 +289,22 @@ footer {
   position: absolute;
   top: calc(var(--body-padding-top) + 0.15rem);
   right: 1rem;
+  display: none;            /* shown only once the inline script confirms JS */
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font-family: inherit;     /* button reset: keep emoji rendering identical */
   font-size: var(--font-size-nav);
-  text-decoration: none;
   line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
   transition: transform 0.15s ease;
+}
+/* Reveal the toggle only when JS is available (script adds .js to <html>).
+   Without JS the button would do nothing, so it stays hidden. */
+html.js #theme-toggle {
+  display: block;
 }
 #theme-toggle:hover {
   transform: scale(1.15);
@@ -355,7 +367,6 @@ html[data-theme="dark"] {
   --color-link:               #58a6ff;
   --color-link-hover:         #79b8ff;
   --color-muted:              #8b949e;
-  --color-border:             #30363d;
   --color-blockquote-border:  #30363d;
   --color-blockquote-text:    #8b949e;
   --color-blockquote-bg:      #161b22;
@@ -398,7 +409,7 @@ html[data-theme="dark"] img {
   }
   pre {
     white-space: pre-wrap;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     border: 1px solid #ccc;
   }
 }
