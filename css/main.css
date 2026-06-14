@@ -290,6 +290,12 @@ footer {
   color: var(--color-muted);
   font-size: var(--font-size-small);
 }
+/* My own footer paragraphs (e.g. the RSS line) — match the footer size
+   (same as the "Powered by Bear" line), overriding the global 18px p rule */
+footer p {
+  font-size: var(--font-size-small);
+  margin-bottom: 0.5rem;
+}
 
 /* ─── Theme Toggle Button ───────────────────────────────── */
 /* [Rec 6] top uses --body-padding-top so it tracks body padding automatically */
