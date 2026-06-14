@@ -133,9 +133,9 @@ h4 {
 
 /* ─── Body Copy ──────────────────────────────────────────── */
 p {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   font-size: var(--font-size-body);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 strong, b {
   font-weight: 600;
@@ -212,6 +212,14 @@ blockquote {
 }
 blockquote p {
   margin: 0.5rem 0;
+}
+
+/* ─── Horizontal Rule (---) ──────────────────────────────── */
+/* Generous spacing so dividers get a roomy gap without &nbsp; spacers */
+hr {
+  border: none;
+  border-top: 1px solid var(--color-blockquote-border);
+  margin: 3rem 0;
 }
 
 /* ─── Images ─────────────────────────────────────────────── */
