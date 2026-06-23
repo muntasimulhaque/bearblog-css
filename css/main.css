@@ -20,7 +20,7 @@
   --font-size-base:           1.0625rem;   /* 17px */
   --font-size-body:           1.125rem;    /* 18px */
   --font-size-small:          0.9375rem;   /* 15px */
-  --font-size-nav:            1.1875rem;
+  --font-size-nav:            1.125rem;    /* 18px — nav links (theme toggle is pinned separately) */
   /* Layout — used by both body padding and theme-toggle positioning
      so changing padding only requires touching one variable */
   --body-padding-top:         4rem;
@@ -196,6 +196,12 @@ ul.blog-posts li > *:first-child .post-date {
   margin: 0;
   font-style: normal;
 }
+/* Title link: match body copy (18px) so the primary item on the list
+   isn't smaller than ordinary body text. The date column keeps its own
+   --font-size-base above, so title (18px) > date (17px) gives clean hierarchy. */
+ul.blog-posts li a {
+  font-size: var(--font-size-body);
+}
 /* Visited state scoped only to blog-post list titles */
 ul.blog-posts li a:visited {
   color: #6f42c1;
@@ -270,7 +276,7 @@ pre code {
 .post-date,
 time {
   color: var(--color-muted);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-small);   /* subtitle under the H1 — smaller than the 17px base */
   font-style: normal;
   display: block;
   margin-bottom: 2.5rem;
@@ -309,7 +315,7 @@ footer p {
   background: none;
   color: inherit;
   font-family: inherit;     /* button reset: keep emoji rendering identical */
-  font-size: var(--font-size-nav);
+  font-size: 1.1875rem;     /* pinned to its original size; decoupled from nav-link size */
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
@@ -361,10 +367,8 @@ html.js #theme-toggle {
   img {
     margin: 1rem auto;
   }
-  .post-date,
-  time {
-    font-size: var(--font-size-small);
-  }
+  /* .post-date/time mobile override removed — the global rule is now
+     --font-size-small, so the date needs no separate mobile size */
   #theme-toggle {
     right: 0.75rem;
     /* top is now automatic via --body-padding-top: 2rem above */
