@@ -1,21 +1,21 @@
 /* ─── Variables ─────────────────────────────────────────── */
 :root {
   color-scheme: light;
-  /* Colours */
-  --color-text:               #1a1a1a;
-  --color-background:         #eef0f3;   /* soft neutral gray — eased off bright white to cut glare; mirrors the dark theme's lift off near-black */
-  --color-link:               #1668d4;   /* GitHub-ish blue, kept AA after the bg softened; ~4.6:1 on #eef0f3, passes WCAG AA */
-  --color-link-hover:         #0d5bba;
-  --color-muted:              #5f6368;
+  /* Colours — Flexoki light "paper" (canonical) · https://stephango.com/flexoki */
+  --color-text:               #100F0F;   /* Flexoki black — 18.6:1 on paper, AAA */
+  --color-background:         #FFFCF0;   /* Flexoki paper — warm off-white; reads like ink on paper */
+  --color-link:               #205EA6;   /* Flexoki blue-600 — 6.4:1 on paper, AA */
+  --color-link-hover:         #1A4F8C;   /* Flexoki blue-700 — darker on hover */
+  --color-muted:              #6F6E69;   /* Flexoki base-600 — 5.0:1 on paper, AA */
   /* Blockquote / code colours — variable-driven so dark mode overrides
      these alone, with no separate per-element dark-mode blocks needed */
-  --color-blockquote-border:  #d0d7de;
-  --color-blockquote-text:    #57606a;
-  --color-blockquote-bg:      #f6f8fa;
-  --color-code-text:          #24292e;
-  --color-code-bg:            rgba(175, 184, 193, 0.2);
-  --color-pre-bg:             #f6f8fa;
-  --color-pre-border:         #e1e4e8;
+  --color-blockquote-border:  #DAD8CE;   /* Flexoki base-150 */
+  --color-blockquote-text:    #575653;   /* Flexoki base-700 — 6.4:1 on bq bg, AA */
+  --color-blockquote-bg:      #F2F0E5;   /* Flexoki base-50 — inset under the paper page */
+  --color-code-text:          #403E3C;   /* Flexoki base-800 */
+  --color-code-bg:            rgba(135, 133, 128, 0.20);  /* Flexoki base-500 tint — warm */
+  --color-pre-bg:             #F2F0E5;   /* Flexoki base-50 */
+  --color-pre-border:         #E6E4D9;   /* Flexoki base-100 */
   /* Typography scale — single source of truth for all font sizes */
   --font-size-base:           1.0625rem;   /* 17px — body copy, in-article lists, nav, and post-list titles */
   --font-size-small:          0.9375rem;   /* 15px — meta: post dates, post-list dates, footer */
@@ -203,7 +203,7 @@ ul.blog-posts li a {
 }
 /* Visited state scoped only to blog-post list titles */
 ul.blog-posts li a:visited {
-  color: #6f42c1;
+  color: #5E409D;   /* Flexoki purple-600 — 7.6:1 on paper, AAA */
 }
 
 /* ─── Blockquote ─────────────────────────────────────────── */
@@ -381,21 +381,25 @@ html.js #theme-toggle {
    them updates automatically — no per-element dark overrides needed. */
 html[data-theme="dark"] {
   color-scheme: dark;
-  --color-text:               #adbac7;
-  --color-background:         #22272e;
-  --color-link:               #539bf5;
-  --color-link-hover:         #6cb6ff;
-  --color-muted:              #768390;
-  --color-blockquote-border:  #444c56;
-  --color-blockquote-text:    #768390;
-  --color-blockquote-bg:      #2d333b;
-  --color-code-text:          #adbac7;
-  --color-code-bg:            rgba(99, 110, 123, 0.2);
-  --color-pre-bg:             #2d333b;
-  --color-pre-border:         #444c56;
+  /* Flexoki dark "Ink on paper" — page is true black (Flexoki black #100F0F):
+     OLED-friendly, highest contrast. True black leaves enough headroom for
+     Flexoki's canonical accents (blue-400, base-500, purple-400) at AA;
+     surfaces elevate to base-950 so quotes/code read above the page. */
+  --color-text:               #CECDC3;   /* Flexoki base-200 — 12.0:1, AAA */
+  --color-background:         #100F0F;   /* Flexoki black — true black */
+  --color-link:               #4385BE;   /* Flexoki blue-400 — 4.9:1, AA */
+  --color-link-hover:         #66A0C8;   /* Flexoki blue-300 — lighter on hover */
+  --color-muted:              #878580;   /* Flexoki base-500 — 5.2:1, AA */
+  --color-blockquote-border:  #343331;   /* Flexoki base-850 */
+  --color-blockquote-text:    #878580;   /* Flexoki base-500 — 4.7:1 on bq bg, AA */
+  --color-blockquote-bg:      #1C1B1A;   /* Flexoki base-950 — elevated above true black */
+  --color-code-text:          #CECDC3;   /* Flexoki base-200 */
+  --color-code-bg:            rgba(135, 133, 128, 0.18);  /* Flexoki base-500 tint — warm */
+  --color-pre-bg:             #1C1B1A;   /* Flexoki base-950 */
+  --color-pre-border:         #343331;   /* Flexoki base-850 */
 }
 html[data-theme="dark"] ul.blog-posts li a:visited {
-  color: #b083f0;
+  color: #8B7EC8;   /* Flexoki purple-400 — 5.4:1 on true black, AA */
 }
 /* The only dark-mode rule that cannot be expressed as a variable */
 html[data-theme="dark"] img {
