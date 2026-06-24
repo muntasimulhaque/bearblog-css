@@ -4,7 +4,7 @@
   /* Colours */
   --color-text:               #1a1a1a;
   --color-background:         #fafafa;
-  --color-link:               #1366d6;
+  --color-link:               #1a6dd6;   /* lightened toward GitHub's blue; ~4.8:1 on #fafafa, passes WCAG AA */
   --color-link-hover:         #0d5bba;
   --color-muted:              #5f6368;
   /* Blockquote / code colours — variable-driven so dark mode overrides
@@ -17,10 +17,8 @@
   --color-pre-bg:             #f6f8fa;
   --color-pre-border:         #e1e4e8;
   /* Typography scale — single source of truth for all font sizes */
-  --font-size-base:           1.0625rem;   /* 17px */
-  --font-size-body:           1.125rem;    /* 18px */
-  --font-size-small:          0.9375rem;   /* 15px */
-  --font-size-nav:            1.125rem;    /* 18px — nav links (theme toggle is pinned separately) */
+  --font-size-base:           1.0625rem;   /* 17px — body copy, in-article lists, nav, and post-list titles */
+  --font-size-small:          0.9375rem;   /* 15px — meta: post dates, post-list dates, footer */
   /* Layout — used by both body padding and theme-toggle positioning
      so changing padding only requires touching one variable */
   --body-padding-top:         4rem;
@@ -52,9 +50,9 @@ body {
   max-width: 42rem;
   padding: var(--body-padding-top) 1rem;  /* [Rec 6] uses variable */
   margin: 0 auto;
-  font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;   /* Modern Font Stacks "Neo-Grotesque" — local fonts only; Arial on Windows, which also carries the Arabic */
   font-size: var(--font-size-base);
-  font-size-adjust: 0.5; /* intentional: keeps x-height consistent across the fallback chain; also helps Arabic render at a comfortable size */
+  font-size-adjust: 0.5; /* intentional: keeps x-height consistent across the fallback chain and the non-Latin fallback; also helps Arabic/Bengali render at a comfortable size */
   line-height: 1.65;
   color: var(--color-text);
   background-color: var(--color-background);
@@ -81,7 +79,7 @@ nav {
 }
 nav a {
   margin-right: 1rem;
-  font-size: var(--font-size-nav);
+  font-size: var(--font-size-base);   /* 17px */
   color: var(--color-muted);
   text-decoration: none;
   transition: color var(--transition-speed) ease;
@@ -110,21 +108,21 @@ h1 {
   margin-bottom: 1rem;
 }
 h2 {
-  font-size: 1.875rem;
+  font-size: 1.75rem;    /* 28px */
   font-weight: 600;
   margin-top: 2.5rem;   /* section heading gets more space above than h3 (2rem) */
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
 h3 {
-  font-size: 1.625rem;
+  font-size: 1.5rem;     /* 24px */
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
 h4 {
-  font-size: 1.3125rem;
+  font-size: 1.25rem;     /* 20px */
   font-weight: 600;
   line-height: 1.3;
   margin-top: 1.5rem;
@@ -133,9 +131,9 @@ h4 {
 
 /* ─── Body Copy ──────────────────────────────────────────── */
 p {
-  margin-bottom: 1.5rem;
-  font-size: var(--font-size-body);
-  line-height: 1.6;
+  margin-bottom: 1.75rem;             /* a bit more separation to pair with the tighter 1.6 leading */
+  font-size: var(--font-size-base);   /* 17px — matches GitHub's article size; equals in-article list items for consistency */
+  line-height: 1.6;                   /* tightened from 1.7 — comfortable for 17px body text at this measure */
 }
 strong, b {
   font-weight: 600;
@@ -175,12 +173,14 @@ ul.blog-posts li > * {
   line-height: 1.4;
 }
 /* Date column: fixed width, non-italic, left-aligned */
-/* [Rec 3] min-width and max-width removed — flex: 0 0 7.5rem already
-   locks the size exactly when flex-grow and flex-shrink are both 0 */
+/* [Rec 3] min-width and max-width removed — flex: 0 0 6rem already
+   locks the size exactly when flex-grow and flex-shrink are both 0.
+   Tightened from 7.5rem now that the date is 15px (all dates are the
+   fixed-width "DD Mon, YYYY" format, ~5.5rem wide). */
 ul.blog-posts li > *:first-child {
-  flex: 0 0 7.5rem;
+  flex: 0 0 6rem;
   color: var(--color-muted);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-small);   /* 15px — quieter than the 17px title beside it */
   white-space: nowrap;
   font-style: normal;
   text-align: left;
@@ -196,11 +196,10 @@ ul.blog-posts li > *:first-child .post-date {
   margin: 0;
   font-style: normal;
 }
-/* Title link: match body copy (18px) so the primary item on the list
-   isn't smaller than ordinary body text. The date column keeps its own
-   --font-size-base above, so title (18px) > date (17px) gives clean hierarchy. */
+/* Title link: 17px (--font-size-base) — matches the article body copy and
+   sits a clear step above the 15px date column for clean hierarchy. */
 ul.blog-posts li a {
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-base);
 }
 /* Visited state scoped only to blog-post list titles */
 ul.blog-posts li a:visited {
@@ -297,7 +296,7 @@ footer {
   font-size: var(--font-size-small);
 }
 /* My own footer paragraphs (e.g. the RSS line) — match the footer size
-   (same as the "Powered by Bear" line), overriding the global 18px p rule */
+   (same as the "Powered by Bear" line), overriding the global p rule */
 footer p {
   font-size: var(--font-size-small);
   margin-bottom: 0.5rem;
@@ -344,9 +343,8 @@ html.js #theme-toggle {
     font-size: 1.375rem;
     padding-right: 2.5rem;
   }
-  p {
-    font-size: var(--font-size-base);
-  }
+  /* [Rec] mobile p font-size override removed — desktop p now uses
+     --font-size-base (17px) too, so it did nothing */
   h1 {
     font-size: 1.9rem;
     line-height: 1.25;
@@ -355,7 +353,10 @@ html.js #theme-toggle {
     font-size: 1.3rem;
   }
   h3 {
-    font-size: 1.1875rem;
+    font-size: 1.1875rem;   /* 19px */
+  }
+  h4 {
+    font-size: 1.125rem;    /* 18px — keep h4 below h3 on small screens */
   }
   /* [Rec 8] nav a font-size removed — identical to base rule, does nothing */
   pre {
