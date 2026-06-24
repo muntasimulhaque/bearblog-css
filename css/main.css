@@ -3,8 +3,8 @@
   color-scheme: light;
   /* Colours */
   --color-text:               #1a1a1a;
-  --color-background:         #fafafa;
-  --color-link:               #1a6dd6;   /* lightened toward GitHub's blue; ~4.8:1 on #fafafa, passes WCAG AA */
+  --color-background:         #eef0f3;   /* soft neutral gray — eased off bright white to cut glare; mirrors the dark theme's lift off near-black */
+  --color-link:               #1668d4;   /* GitHub-ish blue, kept AA after the bg softened; ~4.6:1 on #eef0f3, passes WCAG AA */
   --color-link-hover:         #0d5bba;
   --color-muted:              #5f6368;
   /* Blockquote / code colours — variable-driven so dark mode overrides
@@ -381,21 +381,21 @@ html.js #theme-toggle {
    them updates automatically — no per-element dark overrides needed. */
 html[data-theme="dark"] {
   color-scheme: dark;
-  --color-text:               #c9d1d9;
-  --color-background:         #0d1117;
-  --color-link:               #58a6ff;
-  --color-link-hover:         #79b8ff;
-  --color-muted:              #8b949e;
-  --color-blockquote-border:  #30363d;
-  --color-blockquote-text:    #8b949e;
-  --color-blockquote-bg:      #161b22;
-  --color-code-text:          #c9d1d9;
-  --color-code-bg:            rgba(110, 118, 129, 0.2);
-  --color-pre-bg:             #161b22;
-  --color-pre-border:         #30363d;
+  --color-text:               #adbac7;
+  --color-background:         #22272e;
+  --color-link:               #539bf5;
+  --color-link-hover:         #6cb6ff;
+  --color-muted:              #768390;
+  --color-blockquote-border:  #444c56;
+  --color-blockquote-text:    #768390;
+  --color-blockquote-bg:      #2d333b;
+  --color-code-text:          #adbac7;
+  --color-code-bg:            rgba(99, 110, 123, 0.2);
+  --color-pre-bg:             #2d333b;
+  --color-pre-border:         #444c56;
 }
 html[data-theme="dark"] ul.blog-posts li a:visited {
-  color: #a371f7;
+  color: #b083f0;
 }
 /* The only dark-mode rule that cannot be expressed as a variable */
 html[data-theme="dark"] img {
