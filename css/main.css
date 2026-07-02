@@ -4,8 +4,8 @@
   /* Colours — Flexoki light "paper" (canonical) · https://stephango.com/flexoki */
   --color-text:               #100F0F;   /* Flexoki black — 18.6:1 on paper, AAA */
   --color-background:         #FFFCF0;   /* Flexoki paper — warm off-white; reads like ink on paper */
-  --color-link:               #24837B;   /* Flexoki cyan-600 — 6.4:1 on paper, AA */
-  --color-link-hover:         #1C6C66;   /* Flexoki cyan-700 — darker on hover */
+  --color-link:               #1C6C66;   /* Flexoki cyan-700 — 6.0:1 on paper, AA (cyan-600 was 4.4:1, just under AA) */
+  --color-link-hover:         #164F4A;   /* Flexoki cyan-800 — 9.1:1, darker on hover */
   --color-muted:              #6F6E69;   /* Flexoki base-600 — 5.0:1 on paper, AA */
   /* Blockquote / code colours — variable-driven so dark mode overrides
      these alone, with no separate per-element dark-mode blocks needed */
@@ -16,6 +16,7 @@
   --color-code-bg:            rgba(135, 133, 128, 0.20);  /* Flexoki base-500 tint — warm */
   --color-pre-bg:             #F2F0E5;   /* Flexoki base-50 */
   --color-pre-border:         #E6E4D9;   /* Flexoki base-100 */
+  --color-selection:          #DAD8CE;   /* Flexoki base-150 — text selection highlight */
   /* Typography scale — single source of truth for all font sizes */
   --font-size-base:           1.0625rem;   /* 17px — body copy, in-article lists, nav, and post-list titles */
   --font-size-small:          0.9375rem;   /* 15px — meta: post dates, post-list dates, footer */
@@ -40,20 +41,34 @@
 ul, ol {
   padding-left: 1.5rem;
 }
-html {
-  scroll-behavior: smooth;
+/* Smooth scrolling and transitions only for visitors who haven't asked
+   their OS for reduced motion — their preference wins */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  a,
+  nav a,
+  #theme-toggle svg {
+    transition: none;
+  }
+  #theme-toggle:hover svg {
+    transform: none;
+  }
 }
 
 /* ─── Body & Layout ─────────────────────────────────────── */
 body {
   position: relative;
-  max-width: 42rem;
+  max-width: 40rem;   /* ~71 characters per line at 17px — a touch more book-like than 42rem */
   padding: var(--body-padding-top) 1rem;  /* [Rec 6] uses variable */
   margin: 0 auto;
   font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;   /* Modern Font Stacks "Neo-Grotesque" — local fonts only; Arial on Windows, which also carries the Arabic */
   font-size: var(--font-size-base);
   font-size-adjust: 0.5; /* intentional: keeps x-height consistent across the fallback chain and the non-Latin fallback; also helps Arabic/Bengali render at a comfortable size */
-  line-height: 1.65;
+  line-height: 1.6;   /* single source of truth — inherited by p, lists, blockquotes, nav */
   color: var(--color-text);
   background-color: var(--color-background);
 }
@@ -77,6 +92,9 @@ a.title h1 {
 nav {
   margin-bottom: 3rem;
 }
+/* margin-right (not flex gap) because Bear wraps the nav links in a <p>:
+   flex on <nav> would treat that paragraph as a single item, killing the
+   gap between links and un-collapsing the paragraph's bottom margin */
 nav a {
   margin-right: 1rem;
   font-size: var(--font-size-base);   /* 17px */
@@ -98,6 +116,16 @@ a {
 a:hover {
   text-decoration: underline;
   color: var(--color-link-hover);
+}
+
+/* ─── Selection & Focus ──────────────────────────────────── */
+::selection {
+  background-color: var(--color-selection);
+}
+/* Keyboard focus ring that matches the theme instead of the browser default */
+:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
 }
 
 /* ─── Headings ───────────────────────────────────────────── */
@@ -133,7 +161,7 @@ h4 {
 p {
   margin-bottom: 1.75rem;             /* a bit more separation to pair with the tighter 1.6 leading */
   font-size: var(--font-size-base);   /* 17px — matches GitHub's article size; equals in-article list items for consistency */
-  line-height: 1.6;                   /* tightened from 1.7 — comfortable for 17px body text at this measure */
+  /* line-height inherited from body (1.6) — one value governs prose and lists alike */
 }
 strong, b {
   font-weight: 600;
@@ -181,6 +209,7 @@ ul.blog-posts li > *:first-child {
   flex: 0 0 6rem;
   color: var(--color-muted);
   font-size: var(--font-size-small);   /* 15px — quieter than the 17px title beside it */
+  font-variant-numeric: tabular-nums;  /* equal-width digits — dates align in every fallback font */
   white-space: nowrap;
   font-style: normal;
   text-align: left;
@@ -237,12 +266,35 @@ img {
   border-radius: 3px;
 }
 
+/* ─── Tables ─────────────────────────────────────────────── */
+table {
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+th, td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-blockquote-border);
+  text-align: left;
+}
+th {
+  font-weight: 600;
+}
+
+/* ─── Figure Captions ────────────────────────────────────── */
+figcaption {
+  margin: -0.75rem 0 1.5rem;   /* tucks under the image's 1.5rem bottom margin */
+  color: var(--color-muted);
+  font-size: var(--font-size-small);
+  text-align: center;
+}
+
 /* ─── Inline Code ────────────────────────────────────────── */
 /* [Rec 2] word-wrap: break-word removed — deprecated alias for overflow-wrap */
 code:not(pre code) {
   background-color: var(--color-code-bg);
   border-radius: 6px;
   padding: 0.2em 0.4em;
+  font-size: 0.95em;   /* monospace glyphs run wide — trim so inline code sits level with prose */
   color: var(--color-code-text);
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   overflow-wrap: break-word;
@@ -309,25 +361,47 @@ footer p {
   top: calc(var(--body-padding-top) + 0.15rem);
   right: 1rem;
   display: none;            /* shown only once the inline script confirms JS */
-  padding: 0;
+  /* Invisible padding grows the tap/click target to ~44px; the negative
+     margin cancels it visually, so the icon doesn't move a pixel */
+  padding: 0.75rem;
+  margin: -0.75rem;
   border: none;
   background: none;
   color: inherit;
-  font-family: inherit;     /* button reset: keep emoji rendering identical */
-  font-size: 1.1875rem;     /* pinned to its original size; decoupled from nav-link size */
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
+}
+/* Inline SVG icons: stroke follows currentColor, so they recolour with the
+   theme and render identically on every OS (unlike emoji) */
+#theme-toggle svg {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
   transition: transform 0.15s ease;
+}
+/* Hover zoom on the icon only (never the padded box — the box sits flush
+   with the screen edge, so scaling it caused horizontal overflow), and only
+   on devices with real hover (touch screens latch :hover after a tap) */
+@media (hover: hover) {
+  #theme-toggle:hover svg {
+    transform: scale(1.15);
+  }
+}
+/* Moon shows in light mode, sun in dark mode — swapped by CSS, not JS */
+#theme-toggle .icon-sun {
+  display: none;
+}
+html[data-theme="dark"] #theme-toggle .icon-moon {
+  display: none;
+}
+html[data-theme="dark"] #theme-toggle .icon-sun {
+  display: block;
 }
 /* Reveal the toggle only when JS is available (script adds .js to <html>).
    Without JS the button would do nothing, so it stays hidden. */
 html.js #theme-toggle {
   display: block;
-}
-#theme-toggle:hover {
-  transform: scale(1.15);
-  text-decoration: none;
 }
 
 /* ─── Mobile ─────────────────────────────────────────────── */
@@ -381,29 +455,32 @@ html.js #theme-toggle {
    them updates automatically — no per-element dark overrides needed. */
 html[data-theme="dark"] {
   color-scheme: dark;
-  /* Flexoki dark "Ink on paper" — page is true black (Flexoki black #100F0F):
-     OLED-friendly, highest contrast. True black leaves enough headroom for
-     Flexoki's canonical accents (blue-400, base-500, purple-400) at AA;
-     surfaces elevate to base-950 so quotes/code read above the page. */
-  --color-text:               #CECDC3;   /* Flexoki base-200 — 12.0:1, AAA */
-  --color-background:         #100F0F;   /* Flexoki black — true black */
-  --color-link:               #3AA99F;   /* Flexoki cyan-400 — 4.9:1, AA */
+  /* Flexoki dark — page elevated to base-950 instead of true black: light
+     text on pure black causes halation (edge glow/smearing) for astigmatic
+     readers, and base-950 damps that while still reading as "dark ink".
+     Surfaces (quotes/code) elevate one further step to base-900, keeping
+     the same raised-surface relationship as before. */
+  --color-text:               #CECDC3;   /* Flexoki base-200 — 10.7:1, AAA */
+  --color-background:         #1C1B1A;   /* Flexoki base-950 — softened near-black */
+  --color-link:               #3AA99F;   /* Flexoki cyan-400 — 6.0:1, AA */
   --color-link-hover:         #5ABDAC;   /* Flexoki cyan-300 — lighter on hover */
-  --color-muted:              #878580;   /* Flexoki base-500 — 5.2:1, AA */
-  --color-blockquote-border:  #343331;   /* Flexoki base-850 */
-  --color-blockquote-text:    #878580;   /* Flexoki base-500 — 4.7:1 on bq bg, AA */
-  --color-blockquote-bg:      #1C1B1A;   /* Flexoki base-950 — elevated above true black */
+  --color-muted:              #878580;   /* Flexoki base-500 — 4.6:1, AA */
+  --color-blockquote-border:  #403E3C;   /* Flexoki base-800 */
+  --color-blockquote-text:    #9F9D96;   /* Flexoki base-400 — 5.4:1 on bq bg, AA */
+  --color-blockquote-bg:      #282726;   /* Flexoki base-900 — elevated above the page */
   --color-code-text:          #CECDC3;   /* Flexoki base-200 */
   --color-code-bg:            rgba(135, 133, 128, 0.18);  /* Flexoki base-500 tint — warm */
-  --color-pre-bg:             #1C1B1A;   /* Flexoki base-950 */
-  --color-pre-border:         #343331;   /* Flexoki base-850 */
+  --color-pre-bg:             #282726;   /* Flexoki base-900 */
+  --color-pre-border:         #403E3C;   /* Flexoki base-800 */
+  --color-selection:          #403E3C;   /* Flexoki base-800 — text selection highlight */
 }
 html[data-theme="dark"] ul.blog-posts li a:visited {
-  color: #8B7EC8;   /* Flexoki purple-400 — 5.4:1 on true black, AA */
+  color: #8B7EC8;   /* Flexoki purple-400 — 4.8:1 on base-950, AA */
 }
-/* The only dark-mode rule that cannot be expressed as a variable */
+/* The only dark-mode rules that cannot be expressed as variables */
 html[data-theme="dark"] img {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  filter: brightness(0.9);   /* soften bright photos against the dark page */
 }
 
 /* ─── Print ──────────────────────────────────────────────── */
