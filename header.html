@@ -34,4 +34,29 @@
     });
   }
 })();
+
+(function() {
+  // Highlight the nav item for the page the visitor is currently on.
+  // Bear Blog doesn't mark the active link, so we compare each nav link's
+  // path to the current URL (exact match, trailing slashes ignored) and tag
+  // it with aria-current="page" — CSS colours it, screen readers announce it.
+  // On a post page nothing matches, so all nav items stay in their base colour.
+  function markCurrentNavItem() {
+    var here = location.pathname.replace(/\/+$/, '') || '/';
+    var links = document.querySelectorAll('nav a');
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].origin !== location.origin) continue;   // skip external links
+      var path = links[i].pathname.replace(/\/+$/, '') || '/';
+      if (path === here) {
+        links[i].setAttribute('aria-current', 'page');
+      }
+    }
+  }
+  // The nav sits after this script in the DOM, so wait for it to be parsed
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', markCurrentNavItem);
+  } else {
+    markCurrentNavItem();
+  }
+})();
 </script>
